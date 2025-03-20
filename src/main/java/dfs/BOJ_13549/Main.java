@@ -1,4 +1,4 @@
-package dfs.BOJ_3584.BOJ_13549;
+package dfs.BOJ_13549;
 
 import java.io.BufferedReader;
 import java.io.IOException;
