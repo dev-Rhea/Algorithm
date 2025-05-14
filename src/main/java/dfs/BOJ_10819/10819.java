@@ -5,41 +5,44 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 class Main {
+
     static int N;
-    static int max = Integer.MIN_VALUE;
     static int[] nums;
+    static int max = Integer.MIN_VALUE;
     static boolean[] visited;
 
     public static void main(String[] args) throws IOException {
-       BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-       
-       N = Integer.parseInt(br.readLine());
-       nums = new int[N];
-       visited = new boolean[N];
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-       StringTokenizer st = new StringTokenizer(br.readLine());
-       for(int i = 0; i < N; i++) {
-           nums[i] = Integer.parseInt(st.nextToken());
-       }
+        N = Integer.parseInt(br.readLine());
 
-       dfs(0, 0, 0);
+        nums = new int[N];
+        visited = new boolean[N];
 
-       System.out.println(max);
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for(int i=0;i<N;i++) {
+            nums[i] = Integer.parseInt(st.nextToken());
+        }
+
+        for(int i=0;i<N;i++) {
+            visited[i] = true;
+            dfs(1, nums[i], 0);
+            visited[i] = false;
+        }
+
+        System.out.println(max);
     }
 
-    static void dfs(int idx, int sum, int pre) {
-        if(idx == N) {
+    static void dfs(int depth, int prev, int sum) {
+        if(depth == N) {
             max = Math.max(max, sum);
             return;
         }
 
-        for(int i = 0; i < N; i++) {
+        for(int i=0;i<N;i++) {
             if(!visited[i]) {
                 visited[i] = true;
-                
-                if(idx == 0) dfs(1, 0, nums[i]);
-                else dfs(idx + 1, sum + Math.abs(pre-nums[i]), nums[i]);
-
+                dfs(depth + 1, nums[i], sum + Math.abs(prev - nums[i]));
                 visited[i] = false;
             }
         }
