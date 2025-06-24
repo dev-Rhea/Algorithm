@@ -66,7 +66,7 @@ public class Main {
 
         for(int i = idx; i < virus.size(); i++) {
             choice[cnt] = i;
-            dfs(i + 1, cnt + 1); // i+1. cnt+1 -> i+1, cnt+1
+            dfs(i + 1, cnt + 1);
         }
     }
 
