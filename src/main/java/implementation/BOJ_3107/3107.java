@@ -2,66 +2,46 @@ package implementation.BOJ_3107;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String input = br.readLine();
 
-        StringTokenizer st = new StringTokenizer(input, ":");
-        char[] ip = input.toCharArray();
+        if(input.contains("::")) input = input.replace("::", ":zero:");
 
-        int cnt = 0;
-        while(st.hasMoreTokens()) {
-            st.nextToken();
-            cnt++;
+        List<String> ip = Stream.of(input.split(":")).collect(Collectors.toList());
+        List<String> ans = new ArrayList<>();
+
+        for(int i=0;i<ip.size();i++) {
+            String str = ip.get(i);
+            if(str.isEmpty()) continue;
+
+            if(!str.equals("zero")) {
+                while(str.length() < 4) {
+                    str = "0" + str;
+                }
+            }
+            ans.add(str);
         }
 
-        StringBuilder sb = new StringBuilder();
+        int len = 8 - ans.size() + 1;
+        String[] fullIp = new String[8];
         int idx = 0;
-        int idxCnt = 0; // 현자 자리 원소 개수
-        int part = 0; // 현재 까지 확인한 자리 개수
 
-        while(idx < ip.length) {
-            if(ip[idx] == ':') {
-                if(idx == 0) idx++;
-                if(ip[idx-1] == ':') {
-                    for(int i=0;i<8 - cnt;i++) {
-                        part++;
-                        if(part == 0) sb.append("0000");
-                        else sb.append("0000:");
-                    }
-                    idx++;
-                }
-                else {
-                    part++;
-
-                    for(int i=0;i<4-idxCnt;i++) {
-                        sb.append("0");
-                    }
-                    for(int i=idx-idxCnt;i<idx;i++) {
-                        sb.append(ip[i]);
-                    }
-                    sb.append(":");
-                    idxCnt = 0;
-                    idx++;
+        for(String s : ans) {
+            if(s.equals("zero")) {
+                while(len-- > 0) {
+                    fullIp[idx++] = "0000";
                 }
             }
-            else {
-                idxCnt++;
-                if(idx == ip.length-1) {
-                    for(int i=0;i<4 - idxCnt;i++) {
-                        sb.append("0");
-                    }
-                    for(int i=idx - idxCnt+1;i<=idx;i++) {
-                        sb.append(ip[i]);
-                    }
-                    idxCnt = 0;
-                }
-                idx++;
-            }
+            else fullIp[idx++] = s;
         }
-        System.out.println(sb);
+
+        System.out.println(String.join(":", fullIp));
     }
 }
