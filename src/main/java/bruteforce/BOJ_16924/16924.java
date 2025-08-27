@@ -39,7 +39,6 @@ class Main {
             }
         }
         
-        // 모든 위치에서 십자가 찾기
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
                 if (map[i][j] == '*') {
