@@ -1,5 +1,9 @@
-import java.io.*;
-import java.util.*;
+package implementation.BOJ_31423;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.StringTokenizer;
 
 class Main {
 
